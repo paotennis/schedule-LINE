@@ -68,7 +68,7 @@ def main():
 
       message = start_month + "/" + start_day + " "+ str(s_hour) + ":" + start_min + "～" + end_month + "/" + end_day + " "+ str(e_hour) + ":" + end_min + "\n" + event['attributes']['title'] + "\n"
       messages += message
-  line_bot_api.push_message(USER_ID,TextSendMessage(text=message))
+  line_bot_api.push_message(USER_ID,TextSendMessage(text=messages))
 
 if __name__ == "__main__":
     main()
