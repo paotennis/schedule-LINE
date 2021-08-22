@@ -19,6 +19,7 @@ app = Flask(__name__)
 LINE_CHANNEL_ACCESS_TOKEN = os.environ["LINE_CHANNEL_ACCESS_TOKEN"]
 LINE_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]
 TIME_TREE_ACCESS_TOKEN = os.environ["TIME_TREE_ACCESS_TOKEN"]
+USER_ID = os.environ["USER_ID"]
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 
 timezone = 9
@@ -43,6 +44,8 @@ def main():
   r = re.findall(p, today)
   calendars=set(r)
   
+  messages = "明日のスケジュールです。"
+    
   #get schedule
   for calendar in calendars:
     URL = 'https://timetreeapis.com/calendars/'+calendar+'/upcoming_events?timezone=Asia/Tokyo&days=2'
@@ -63,9 +66,9 @@ def main():
       s_hour = int(start_hour) + timezone
       e_hour = int(end_hour) + timezone
 
-      message = start_month + "/" + start_day + " "+ str(s_hour) + ":" + start_min + "～" + end_month + "/" + end_day + " "+ str(e_hour) + ":" + end_min
-      print(message, event['attributes']['title'])
-
+      message = start_month + "/" + start_day + " "+ str(s_hour) + ":" + start_min + "～" + end_month + "/" + end_day + " "+ str(e_hour) + ":" + end_min + "\n" + event['attributes']['title'] + "\n"
+    messages += message
+    line_bot_api.push_message(USER_ID,TextSendMessage(text=message))
 
 if __name__ == "__main__":
     main()
