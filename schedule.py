@@ -16,12 +16,15 @@ from linebot.models import (
 
 app = Flask(__name__)
 
+#環境変数設定
 LINE_CHANNEL_ACCESS_TOKEN = os.environ["LINE_CHANNEL_ACCESS_TOKEN"]
 LINE_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]
 TIME_TREE_ACCESS_TOKEN = os.environ["TIME_TREE_ACCESS_TOKEN"]
 USER_ID = os.environ["USER_ID"]
+
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 
+# タイムゾーンの設定(Japan:+9)
 timezone = 9
 
 def main():
